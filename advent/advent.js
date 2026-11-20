@@ -11,7 +11,7 @@
   var IMG = BASE + 'img/';
   var CFG = Object.assign({
     vk: 'https://vk.ru/vitadi.design',
-    tg: '#',
+    tg: 'https://t.me/vitadidesign',
     privacy: '#',
     site: 'https://vk.ru/vitadi.design'
   }, window.ADVENT_CONFIG || {});
