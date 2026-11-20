@@ -699,7 +699,7 @@
     /* спираль-воронка: снизу широкая, кверху сужается, пыль поднимается вокруг козы */
     var w = this.w, h = this.h; if (!w || !h) return;
     var self = this, gs = gsPx || h * .87, cx = w / 2;
-    var yb = h + gs * .02, yt = h - gs * 1.02, rb = gs * .62, rt = gs * .16;
+    var yb = h + gs * .02, yt = h - gs * 1.02, rb = Math.min(gs * .62, w * .44), rt = Math.min(gs * .16, w * .12);
     for (var k = 0; k < 2; k++) (function (k) {
       var em = { last: null, scale: 1, glow: .16, starP: .6, life: 1.05, step: 5, max: 5 }, a0 = k * 3.1416 + Math.random() * .3, dur = 2300 + Math.random() * 400, turns = 2.6;
       setTimeout(function () {
