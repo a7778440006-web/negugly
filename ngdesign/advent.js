@@ -13,6 +13,7 @@
     vk: 'https://vk.ru/vitadi.design',
     tg: 'https://t.me/vitadidesign',
     privacy: 'https://vitadidesign.tilda.ws/shporadesign#/privacy',
+    shpora: 'https://vitadidesign.tilda.ws/shporadesign',
     site: 'https://vk.ru/vitadi.design'
   }, window.ADVENT_CONFIG || {});
 
@@ -100,6 +101,7 @@
 .adv-gw svg{width:100%;height:100%;display:block;overflow:visible}
 .adv-gs{position:absolute;left:0;top:0;height:10px;border-radius:50%;background:radial-gradient(closest-side,rgba(60,8,4,.45),rgba(60,8,4,0))}
 .adv-ded{left:calc(1075 * var(--k));top:calc(-8 * var(--k));width:calc(197 * var(--k));height:calc(219 * var(--k))}
+.adv-tst{left:calc(-60 * var(--k));top:calc(230 * var(--k));width:calc(420 * var(--k));height:calc(262 * var(--k))}
 .adv-cst{left:calc(940 * var(--k));top:calc(287 * var(--k));width:calc(343 * var(--k));height:calc(214 * var(--k))}
 .adv-cnt{left:calc(984 * var(--k));top:calc(286 * var(--k));width:calc(265 * var(--k));height:calc(265 * var(--k))}
 .adv-cnt{z-index:8;cursor:default;transition:transform .5s cubic-bezier(.22,1,.36,1);transform-origin:50% 90%}
@@ -203,9 +205,15 @@
 .adv-btn.ol:hover{background:#2d1710;color:#f1eadf}
 .adv-btn:hover svg{transform:translateX(3px)}
 .adv-btn:active{transform:translateY(1px)}
+.adv-btn.rd{background:#d7261e;border-color:#d7261e;color:#f1eadf}
+.adv-btn.rd:hover{background:#b10921;border-color:#b10921}
+.adv-more{display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;text-align:center}
+.adv-more p{margin:0;font-size:20px;line-height:1.2;color:#2d1710}
+.adv-more b{font-family:AdvFira,Impact,sans-serif;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:0}
+.adv .adv-more a.adv-btn{text-decoration:none}
 
 /* нижний баннер */
-.adv-ban2 .adv-elk2{left:calc(436 * var(--k));top:calc(42 * var(--k));width:calc(404 * var(--k));height:calc(556 * var(--k));filter:blur(calc(22 * var(--k)))}
+.adv-ban2 .adv-elk2{left:calc(436 * var(--k));top:calc(42 * var(--k));width:calc(404 * var(--k));height:calc(556 * var(--k));filter:blur(calc(5 * var(--k)));opacity:.85}
 .adv-ban2 .glow{left:calc(396 * var(--k));top:calc(121 * var(--k));width:calc(484 * var(--k));height:calc(484 * var(--k));border-radius:50%;
  background:radial-gradient(closest-side,rgba(115,10,6,.14),rgba(115,10,6,0))}
 .adv-ban2 .s1{left:0;top:calc(148 * var(--k));width:calc(571 * var(--k));height:calc(357 * var(--k))}
@@ -240,7 +248,7 @@
  .adv-hero .adv-hand{left:calc(16 * var(--m));width:calc(366 * var(--m));top:calc(420 * var(--m));font-size:calc(32 * var(--m))}
  .adv-hero .adv-hand svg{left:calc(306 * var(--m));top:calc(52 * var(--m));width:calc(36 * var(--m));height:calc(63 * var(--m))}
  .adv-hero .adv-hand .d{display:none}.adv-hero .adv-hand .mb{display:block}
- .adv .adv-elka{display:none}
+ .adv .adv-elka,.adv .adv-tst{display:none}
  .adv-ded{left:calc(202 * var(--m));top:calc(-5 * var(--m));width:calc(150 * var(--m));height:calc(166 * var(--m))}
  .adv-cst{left:calc(115 * var(--m));top:calc(503 * var(--m));width:calc(168 * var(--m));height:calc(105 * var(--m))}
  .adv-cnt{left:calc(136 * var(--m));top:calc(503 * var(--m));width:calc(130 * var(--m));height:calc(130 * var(--m))}
@@ -263,7 +271,7 @@
  .adv-ban2 .d{display:none}.adv-ban2 .m{display:block}
  .adv-ban2 .s1{left:calc(-86 * var(--m));top:calc(34 * var(--m));width:calc(571 * var(--m));height:calc(357 * var(--m))}
  .adv-ban2 .s2,.adv-ban2 .orn{display:none}
- .adv-ban2 .adv-elk2{left:calc(29 * var(--m));top:calc(262 * var(--m));width:calc(341 * var(--m));height:calc(469 * var(--m));filter:blur(calc(19 * var(--m)))}
+ .adv-ban2 .adv-elk2{left:calc(29 * var(--m));top:calc(262 * var(--m));width:calc(341 * var(--m));height:calc(469 * var(--m));filter:blur(calc(4 * var(--m)));opacity:.85}
  .adv-ban2 .glow{left:calc(-34 * var(--m));top:calc(206 * var(--m));width:calc(484 * var(--m));height:calc(484 * var(--m))}
  .adv-ban2 .cat{left:calc(114 * var(--m));top:calc(-24 * var(--m));width:calc(171 * var(--m));height:calc(234 * var(--m))}
  .adv-ban2 .adv-h1{left:calc(24 * var(--m));right:calc(24 * var(--m));top:calc(214 * var(--m));font-size:calc(80 * var(--m))}
@@ -412,6 +420,7 @@
       '<section class="adv-ban adv-hero" aria-label="Адвент-календарь дизайнера">' +
       '<div class="adv-clip"><div class="adv-goat" aria-hidden="true"></div></div>' +
       '<div class="adv-stage">' +
+      '<img class="adv-ab adv-tst" alt="" src="' + IMG + 'stars.webp">' +
       '<img class="adv-ab adv-elka" alt="" src="' + IMG + 'elka.webp">' +
       '<img class="adv-ab adv-cst" alt="" src="' + IMG + 'stars.webp">' +
       '<div class="adv-ab adv-cnt" aria-label="До Нового года ' + n + ' ' + plural(n, 'день', 'дня', 'дней') + '"><span class="cw"><img alt="" src="' + IMG + 'counter.webp"><span class="n">' + n + '</span><span class="w">' + plural(n, 'день', 'дня', 'дней') + '</span></span></div>' +
@@ -437,7 +446,8 @@
       '<h2 class="adv-h1"><span class="d">Счастливого нового года!</span><span class="m"><span class="a">счастливого</span>нового года!</span></h2>' +
       '<div class="adv-hand">Пусть все твои мечты сбываются каждый день</div>' +
       '<img class="adv-ab orn" alt="" src="' + IMG + 'ornaments.webp?v=3">' +
-      '</div><div class="adv-clip gclip"><div class="adv-goat g2" aria-hidden="true"></div></div><canvas class="adv-fx" aria-hidden="true"></canvas></section></div>' +
+      '</div><div class="adv-clip gclip"><div class="adv-goat g2" aria-hidden="true"></div></div><canvas class="adv-fx" aria-hidden="true"></canvas></section>' +
+      '<div class="adv-more"><p>Больше полезного ищи<br>в <b>справочнике дизайнера</b></p><a class="adv-btn rd" href="' + esc(CFG.shpora) + '">Открыть</a></div></div>' +
       '<footer class="adv-foot"><div class="l"><span>Вита, UX/UI-дизайнер</span><a href="' + esc(CFG.site) + '" target="_blank" rel="noopener"><b>vitadi.design</b></a></div>' +
       '<a href="' + esc(CFG.privacy) + '">Политика конфиденциальности</a></footer>' +
       '</div>';
@@ -468,6 +478,8 @@
         el.parentNode.replaceChild(nu, el);
       }
     }
+    var cn = root.querySelector('.adv-cnt');
+    if (cn) { var n = daysLeft(), w = plural(n, 'день', 'дня', 'дней'); cn.querySelector('.n').textContent = n; cn.querySelector('.w').textContent = w; cn.setAttribute('aria-label', 'До Нового года ' + n + ' ' + w); }
     var chips = root.querySelectorAll('.adv-days button');
     for (var i = 0; i < chips.length; i++) chips[i].classList.toggle('on', stateOf(i + 1) !== 'closed');
   }
@@ -501,6 +513,8 @@
   function initDays() {
     var row = root.querySelector('.adv-days .row'); if (!row) return;
     refresh();
+    setInterval(refresh, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) refresh(); });
     row.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       var d = +b.getAttribute('data-go'), c = root.querySelector('#adv-day-' + d);
