@@ -211,7 +211,7 @@
 .adv-ban2 .cat img{width:100%;height:100%;object-fit:contain;object-position:top center}
 .adv-ban2 .adv-h1{position:absolute;left:0;right:0;top:calc(233 * var(--k));font-size:calc(96 * var(--k));line-height:.95;z-index:5}
 .adv-ban2 .adv-hand{position:absolute;left:calc(363 * var(--k));width:calc(550 * var(--k));top:calc(364 * var(--k));font-size:calc(46 * var(--k));z-index:5}
-.adv-ban2 .orn{left:calc(53 * var(--k));top:calc(295 * var(--k));width:calc(1080 * var(--k));height:calc(420.5 * var(--k));z-index:6}
+.adv-ban2 .orn{left:calc(33 * var(--k));top:calc(264.5 * var(--k));width:calc(1140 * var(--k));height:calc(480.5 * var(--k));z-index:6}
 .adv-ban2 .m{display:none}
 
 /* футер */
@@ -431,7 +431,7 @@
       '<div class="adv-ab cat"><img alt="" src="' + IMG + 'cat.webp"></div>' +
       '<h2 class="adv-h1"><span class="d">Счастливого нового года!</span><span class="m"><span class="a">счастливого</span>нового года!</span></h2>' +
       '<div class="adv-hand">Пусть все твои мечты сбываются каждый день</div>' +
-      '<img class="adv-ab orn" alt="" src="' + IMG + 'ornaments.webp">' +
+      '<img class="adv-ab orn" alt="" src="' + IMG + 'ornaments.webp?v=3">' +
       '</div><canvas class="adv-fx" aria-hidden="true"></canvas></section></div>' +
       '<footer class="adv-foot"><div class="l"><span>Вита, UX/UI-дизайнер</span><a href="' + esc(CFG.site) + '" target="_blank" rel="noopener"><b>vitadi.design</b></a></div>' +
       '<a href="' + esc(CFG.privacy) + '">Политика конфиденциальности</a></footer>' +
