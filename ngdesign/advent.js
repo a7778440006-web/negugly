@@ -265,8 +265,10 @@
  .adv-card,.adv-card.wide{grid-column:span 1;height:calc(322 * var(--u))}
  .adv-card .top{left:calc(26.7 * var(--u));right:calc(26.7 * var(--u));top:calc(26.7 * var(--u));height:calc(185 * var(--u))}
  .adv-card .nm{left:calc(26.7 * var(--u));bottom:calc(26.7 * var(--u))}
- .adv-subh{flex-direction:column;align-items:flex-start;gap:24px}
+ .adv-subh{flex-direction:column;align-items:center;gap:24px;text-align:center}
  .adv-subh p{max-width:none}
+ .adv-subh p .b{display:block;margin-top:24px;font-weight:500}
+ .adv-btns{justify-content:center}
  .adv-ban.adv-ban2{height:calc(759 * var(--m))}
  .adv-ban2 .d{display:none}.adv-ban2 .m{display:block}
  .adv-ban2 .s1{left:calc(-86 * var(--m));top:calc(34 * var(--m));width:calc(571 * var(--m));height:calc(357 * var(--m))}
@@ -277,7 +279,9 @@
  .adv-ban2 .adv-h1{left:calc(24 * var(--m));right:calc(24 * var(--m));top:calc(214 * var(--m));font-size:calc(80 * var(--m))}
  .adv-ban2 .adv-h1 .a{display:block;font-size:calc(56 * var(--m));margin-bottom:calc(12 * var(--m))}
  .adv-ban2 .adv-hand{left:calc(24 * var(--m));width:calc(350 * var(--m));top:calc(471 * var(--m));font-size:calc(34 * var(--m))}
- .adv-foot{flex-direction:column;align-items:flex-start;gap:12px;padding:0 0 32px}
+ .adv-foot{flex-direction:column;align-items:center;gap:12px;padding:0 0 32px;text-align:center}
+ .adv-foot .l{justify-content:center;flex-wrap:wrap}
+ .adv .adv-foot>a{text-decoration:underline;text-underline-offset:2px}
 }
 
 /* диалог */
@@ -434,7 +438,7 @@
       '<div class="adv-days"><h3>Выбери день</h3><div class="row">' + chips + '</div></div>' +
       '<div class="adv-grid">' + cards + '</div>' +
       '<div class="adv-sub">' +
-      '<div class="adv-subh"><p>Анонс каждого окошка выходит роликом. Подпишись, чтобы не пропустить.</p><div class="adv-btns">' +
+      '<div class="adv-subh"><p>Анонс каждого окошка выходит роликом.<span class="b"> Подпишись, чтобы не пропустить.</span></p><div class="adv-btns">' +
       '<a class="adv-btn dk" href="' + esc(CFG.vk) + '" target="_blank" rel="noopener">ВКонтакте' + SV.arrow + '</a>' +
       '<a class="adv-btn ol" href="' + esc(CFG.tg) + '" target="_blank" rel="noopener">Telegram' + SV.arrow + '</a></div></div>' +
       '<section class="adv-ban adv-ban2" aria-label="Счастливого Нового года">' +
