@@ -14,8 +14,11 @@
     tg: 'https://t.me/vitadidesign',
     privacy: 'https://vitadidesign.tilda.ws/shporadesign#/privacy',
     shpora: 'https://vitadidesign.tilda.ws/shporadesign',
-    site: 'https://vk.ru/vitadi.design'
+    site: 'https://vk.ru/vitadi.design',
+    countdown: false, // false — на календаре «осталось немного», true — счётчик дней до Нового года
+    test: false       // true — учитывать test: 'open' / 'opened' в окошках (или ?advent_test=1 в адресе)
   }, window.ADVENT_CONFIG || {});
+  var TEST = CFG.test || /[?&]advent_test=1/.test(location.search);
 
   var YEAR = 2026;
   var MONTHS = 'декабря';
@@ -114,6 +117,7 @@
 .adv-cnt .n{position:absolute;left:17.5%;width:65%;top:41.6%;text-align:center;font-family:AdvFira,Impact,sans-serif;font-weight:900;
  font-size:calc(86 * var(--k));line-height:1;color:#2d1710}
 .adv-cnt .w{position:absolute;left:17.5%;width:65%;top:74%;text-align:center;font-weight:700;font-size:calc(13.3 * var(--k));letter-spacing:.1em;color:#d7261e;text-transform:uppercase}
+.adv-cnt.soon .n{top:46%;font-size:calc(34 * var(--k));line-height:.92;text-transform:uppercase}
 .adv-tag{position:absolute;left:calc(973 * var(--k));top:calc(601 * var(--k));background:#6b7a3a;color:#f1eadf;
  font-family:AdvFira,Impact,sans-serif;font-weight:900;font-size:calc(44 * var(--k));line-height:.95;text-transform:uppercase;
  padding:calc(10 * var(--k)) calc(16 * var(--k));transform:rotate(-5deg);transform-origin:0 0;white-space:nowrap;z-index:6}
@@ -254,6 +258,7 @@
  .adv-cnt{left:calc(136 * var(--m));top:calc(503 * var(--m));width:calc(130 * var(--m));height:calc(130 * var(--m))}
  .adv-cnt .n{font-size:calc(42 * var(--m))}
  .adv-cnt .w{font-size:calc(6.5 * var(--m))}
+ .adv-cnt.soon .n{font-size:calc(17 * var(--m))}
  .adv-tag{left:calc(18 * var(--m));top:calc(642 * var(--m));font-size:calc(23 * var(--m));padding:calc(6 * var(--m)) calc(12 * var(--m));transform:rotate(3deg)}
  .adv-intro{font-size:20px;line-height:22px}
  .adv-days{display:flex;flex-direction:column;gap:16px;width:var(--gw);align-items:center}
@@ -368,9 +373,9 @@
   function opened() { try { return JSON.parse(localStorage.getItem(STORE) || '[]'); } catch (e) { return []; } }
   function markOpened(d) { try { var a = opened(); if (a.indexOf(d) < 0) { a.push(d); localStorage.setItem(STORE, JSON.stringify(a)); } } catch (e) {} }
   function stateOf(d) {
-    var data = DAYS[d] || {};
-    if (data.test === 'opened') return 'opened';
-    var avail = data.test === 'open' || now() >= dayStart(d);
+    var data = DAYS[d] || {}, t = TEST ? data.test : '';
+    if (t === 'opened') return 'opened';
+    var avail = t === 'open' || now() >= dayStart(d);
     if (!avail) return 'closed';
     return opened().indexOf(d) >= 0 ? 'opened' : 'open';
   }
@@ -427,7 +432,9 @@
       '<img class="adv-ab adv-tst" alt="" src="' + IMG + 'stars.webp">' +
       '<img class="adv-ab adv-elka" alt="" src="' + IMG + 'elka.webp">' +
       '<img class="adv-ab adv-cst" alt="" src="' + IMG + 'stars.webp">' +
-      '<div class="adv-ab adv-cnt" aria-label="До Нового года ' + n + ' ' + plural(n, 'день', 'дня', 'дней') + '"><span class="cw"><img alt="" src="' + IMG + 'counter.webp"><span class="n">' + n + '</span><span class="w">' + plural(n, 'день', 'дня', 'дней') + '</span></span></div>' +
+      (CFG.countdown
+        ? '<div class="adv-ab adv-cnt" aria-label="До Нового года ' + n + ' ' + plural(n, 'день', 'дня', 'дней') + '"><span class="cw"><img alt="" src="' + IMG + 'counter.webp"><span class="n">' + n + '</span><span class="w">' + plural(n, 'день', 'дня', 'дней') + '</span></span></div>'
+        : '<div class="adv-ab adv-cnt soon" aria-label="До Нового года осталось немного"><span class="cw"><img alt="" src="' + IMG + 'counter.webp"><span class="n">осталось<br>немного</span></span></div>') +
       '<img class="adv-ab adv-ded" alt="" src="' + IMG + 'ded.webp">' +
       '<div class="tw">' + SV.star + '<span>твори волшебство</span>' + SV.star + '</div>' +
       '<h1 class="adv-h1">Адвент-календарь<br>дизайнера</h1>' +
@@ -443,13 +450,13 @@
       '<a class="adv-btn ol" href="' + esc(CFG.tg) + '" target="_blank" rel="noopener">Telegram' + SV.arrow + '</a></div></div>' +
       '<section class="adv-ban adv-ban2" aria-label="Счастливого Нового года">' +
       '<div class="adv-clip"><div class="adv-stage">' +
-      '<img class="adv-ab s1" alt="" src="' + IMG + 'stars.webp"><img class="adv-ab s2" alt="" src="' + IMG + 'stars.webp">' +
-      '<img class="adv-ab adv-elk2" alt="" src="' + IMG + 'elka.webp"><div class="adv-ab glow"></div></div></div>' +
+      '<img class="adv-ab s1" alt="" loading="lazy" src="' + IMG + 'stars.webp"><img class="adv-ab s2" alt="" loading="lazy" src="' + IMG + 'stars.webp">' +
+      '<img class="adv-ab adv-elk2" alt="" loading="lazy" src="' + IMG + 'elka.webp"><div class="adv-ab glow"></div></div></div>' +
       '<div class="adv-stage">' +
-      '<div class="adv-ab cat"><img alt="" src="' + IMG + 'cat.webp"></div>' +
+      '<div class="adv-ab cat"><img alt="" loading="lazy" src="' + IMG + 'cat.webp"></div>' +
       '<h2 class="adv-h1"><span class="d">Счастливого нового года!</span><span class="m"><span class="a">счастливого</span>нового года!</span></h2>' +
       '<div class="adv-hand">Пусть все твои мечты сбываются каждый день</div>' +
-      '<img class="adv-ab orn" alt="" src="' + IMG + 'ornaments.webp?v=3">' +
+      '<img class="adv-ab orn" alt="" loading="lazy" src="' + IMG + 'ornaments.webp?v=3">' +
       '</div><div class="adv-clip gclip"><div class="adv-goat g2" aria-hidden="true"></div></div><canvas class="adv-fx" aria-hidden="true"></canvas></section>' +
       '<div class="adv-more"><p>Больше полезного ищи<br>в <b>справочнике дизайнера</b></p><a class="adv-btn rd" href="' + esc(CFG.shpora) + '">Открыть</a></div></div>' +
       '<footer class="adv-foot"><div class="l"><span>Вита, UX/UI-дизайнер</span><a href="' + esc(CFG.site) + '" target="_blank" rel="noopener"><b>vitadi.design</b></a></div>' +
@@ -483,7 +490,7 @@
       }
     }
     var cn = root.querySelector('.adv-cnt');
-    if (cn) { var n = daysLeft(), w = plural(n, 'день', 'дня', 'дней'); cn.querySelector('.n').textContent = n; cn.querySelector('.w').textContent = w; cn.setAttribute('aria-label', 'До Нового года ' + n + ' ' + w); }
+    if (cn && CFG.countdown) { var n = daysLeft(), w = plural(n, 'день', 'дня', 'дней'); cn.querySelector('.n').textContent = n; cn.querySelector('.w').textContent = w; cn.setAttribute('aria-label', 'До Нового года ' + n + ' ' + w); }
     var chips = root.querySelectorAll('.adv-days button');
     for (var i = 0; i < chips.length; i++) chips[i].classList.toggle('on', stateOf(i + 1) !== 'closed');
   }
@@ -566,7 +573,7 @@
     requestAnimationFrame(function () { dlg.classList.add('on'); var x = dlg.querySelector('.x'); x && x.focus({ preventScroll: true }); });
     startSnow();
     var data = DAYS[d] || {};
-    if (data.test !== 'opened') markOpened(d);
+    if (!(TEST && data.test === 'opened')) markOpened(d);
   }
   function closeDialog() {
     if (!dlg) return;
@@ -632,7 +639,8 @@
 
   function Dust(canvas, opts) {
     this.cv = canvas; this.ctx = canvas.getContext('2d'); this.p = []; this.raf = 0; this.o = opts; this.last = null;
-    this.dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.lite = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+    this.dpr = Math.min(this.lite ? 1.5 : 2, window.devicePixelRatio || 1);
     var self = this; this.loop = function (t) { self.frame(t); };
     this.resize();
   }
@@ -648,6 +656,7 @@
     if (!l || now - l.t > 120) { em.last = { x: x, y: y, t: now }; return; }
     var dx = x - l.x, dy = y - l.y, dist = Math.sqrt(dx * dx + dy * dy);
     var n = Math.min(em.max || this.o.max || 5, Math.floor(dist / (em.step || this.o.step || 7)));
+    if (this.lite) n = Math.ceil(n / 2);
     if (n < 1) return;
     for (var i = 0; i < n; i++) {
       var f = (i + Math.random()) / n, px = l.x + dx * f, py = l.y + dy * f;
@@ -949,6 +958,12 @@
       d.resize(); d.swirl(box.offsetHeight);
     }
     function later(fn, ms) { setTimeout(function () { if (document.hidden) { document.addEventListener('visibilitychange', function h() { if (!document.hidden) { document.removeEventListener('visibilitychange', h); later(fn, 1200); } }); } else fn(); }, ms); }
+    function whenNear(el, fn) {
+      if (!('IntersectionObserver' in window)) return fn();
+      var io = new IntersectionObserver(function (es) { for (var i = 0; i < es.length; i++) if (es[i].isIntersecting) { io.disconnect(); fn(); return; } }, { rootMargin: '400px' });
+      io.observe(el);
+    }
+    function bootGoat() {
     if (!webkit) {
       var v = media = document.createElement('video');
       v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.setAttribute('muted', ''); v.preload = 'auto';
@@ -987,6 +1002,10 @@
         later(run, 900);
       }).catch(function () {});
     }
+    }
+    var first = mob() ? (boxes[1] || boxes[0]) : boxes[0];
+    var go = function () { whenNear(first.parentNode || first, bootGoat); };
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
   }
 
   /* ---------- старт ---------- */
