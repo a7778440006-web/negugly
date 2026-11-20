@@ -90,7 +90,21 @@
 .adv-hand{font-family:AdvCaveat,cursive;font-weight:700;color:#fbf6ed;text-align:center;line-height:1.1}
 .adv-hero .adv-hand{position:absolute;left:calc(363 * var(--k));width:calc(550 * var(--k));top:calc(425 * var(--k));font-size:calc(46 * var(--k));z-index:5}
 .adv-hero .adv-hand svg{position:absolute;left:calc(463 * var(--k));top:calc(75 * var(--k));width:calc(49 * var(--k));height:calc(60 * var(--k))}
-.adv-elka{left:calc(-11 * var(--k));top:calc(180 * var(--k));width:calc(294 * var(--k));height:calc(404 * var(--k))}
+.adv-elka{left:calc(-11 * var(--k));top:calc(180 * var(--k));width:calc(294 * var(--k));height:calc(404 * var(--k));cursor:pointer;
+ transform-origin:50% 96%;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+@media (hover:hover){.adv-elka:hover{animation:advTree 2.4s ease-in-out infinite}}
+@keyframes advTree{0%,100%{transform:rotate(0)}25%{transform:rotate(2.6deg)}50%{transform:rotate(-1.8deg)}75%{transform:rotate(1.4deg)}}
+.adv-gifts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:6;perspective:900px;perspective-origin:50% 0%}
+.adv-gw{position:absolute;left:0;top:0;transform-origin:50% 100%;will-change:transform}
+.adv-gb{position:absolute;inset:0;transform-style:preserve-3d}
+.adv-gb i{position:absolute;inset:0;border:2px solid #f1eadf;backface-visibility:hidden;
+ background:linear-gradient(var(--sh),var(--sh)),linear-gradient(90deg,transparent 39%,var(--rb) 39%,var(--rb) 61%,transparent 61%),linear-gradient(160deg,var(--c1),var(--c2) 60%,var(--c3))}
+.adv-gb i.t,.adv-gb i.b{background:linear-gradient(var(--sh),var(--sh)),linear-gradient(90deg,transparent 39%,var(--rb) 39%,var(--rb) 61%,transparent 61%),linear-gradient(0deg,transparent 39%,var(--rb) 39%,var(--rb) 61%,transparent 61%),linear-gradient(160deg,var(--c1),var(--c2) 60%,var(--c3))}
+.adv-gb .bow{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+.adv-gb .bow b{position:absolute;bottom:0;width:calc(var(--s) * .34);height:calc(var(--s) * .26);border:2px solid #f1eadf;border-radius:60% 60% 20% 60%;background:var(--rb)}
+.adv-gb .bow b:first-child{right:-2px;transform:rotate(-18deg);transform-origin:100% 100%}
+.adv-gb .bow b:last-child{left:-2px;border-radius:60% 60% 60% 20%;transform:rotate(18deg);transform-origin:0 100%}
+.adv-gs{position:absolute;left:0;top:0;height:10px;border-radius:50%;background:radial-gradient(closest-side,rgba(60,8,4,.45),rgba(60,8,4,0))}
 .adv-ded{left:calc(1075 * var(--k));top:calc(-8 * var(--k));width:calc(197 * var(--k));height:calc(219 * var(--k))}
 .adv-cst{left:calc(940 * var(--k));top:calc(287 * var(--k));width:calc(343 * var(--k));height:calc(214 * var(--k))}
 .adv-cnt{left:calc(984 * var(--k));top:calc(286 * var(--k));width:calc(265 * var(--k));height:calc(265 * var(--k))}
@@ -264,6 +278,9 @@
 .adv-dlg{position:fixed;inset:0;z-index:99999;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;
  padding:40px 16px;opacity:0;visibility:hidden;transition:opacity .3s ease-out,visibility 0s .3s;-webkit-overflow-scrolling:touch;
  font-family:AdvOnest,Arial,sans-serif;color:#2d1710}
+.adv-dlg *,.adv-dlg *::before,.adv-dlg *::after{box-sizing:border-box}
+.adv-dlg button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;box-shadow:none;-webkit-appearance:none;appearance:none}
+.adv-dlg a{text-decoration:none}
 .adv-dlg.on{opacity:1;visibility:visible;transition:opacity .3s ease-out}
 .adv-dlg .ov{position:fixed;inset:0;background:rgba(45,23,16,.8)}
 .adv-dlg canvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
@@ -405,7 +422,7 @@
       '<h1 class="adv-h1">Адвент-календарь<br>дизайнера</h1>' +
       '<div class="adv-hand">Нажми на открытое окошко, чтобы развернуть.' + SV.hand + SV.handM + '</div>' +
       '<div class="adv-tag">Декабрь ' + YEAR + '</div>' +
-      '</div><canvas class="adv-fx" aria-hidden="true"></canvas></section></div>' +
+      '</div><div class="adv-gifts" aria-hidden="true"></div><canvas class="adv-fx" aria-hidden="true"></canvas></section></div>' +
       '<div class="adv-intro"><b>24 окошка — по одному каждый день до 24 декабря.</b><span>Новое окошко открывается в 00:00 по Москве.</span></div>' +
       '<div class="adv-days"><h3>Выбери день</h3><div class="row">' + chips + '</div></div>' +
       '<div class="adv-grid">' + cards + '</div>' +
@@ -438,7 +455,7 @@
     root.innerHTML = pageHTML();
     host.innerHTML = ''; host.appendChild(root);
     ready = true;
-    bindCards(); initGoat(); initDust(); initDays();
+    bindCards(); initGoat(); initDust(); initDays(); initGifts();
   }
 
   function refresh() {
@@ -723,6 +740,98 @@
     }
     if (fine) window.addEventListener('pointermove', move, { passive: true });
     else root.addEventListener('pointermove', move, { passive: true });
+  }
+
+  /* ---------- подарки из-под ёлки ---------- */
+  var GIFTC = [
+    { c1: '#b3dbf3', c2: '#8ec5e8', c3: '#5f9fc8', rb: '#e0291f' },
+    { c1: '#f0402c', c2: '#d7261e', c3: '#a3121a', rb: '#7d8c45' },
+    { c1: '#8a9a4e', c2: '#6b7a3a', c3: '#4d5826', rb: '#e0291f' }
+  ];
+  function initGifts() {
+    var tree = root.querySelector('.adv-elka'), layer = root.querySelector('.adv-gifts'), ban = root.querySelector('.adv-hero');
+    if (!tree || !layer) return;
+    var live = [], busy = false, raf = 0, last = 0;
+    var FACES = [['f', 'translateZ(H)', 0], ['k', 'rotateY(180deg) translateZ(H)', .28], ['r', 'rotateY(90deg) translateZ(H)', .14],
+      ['l', 'rotateY(-90deg) translateZ(H)', .2], ['t', 'rotateX(90deg) translateZ(H)', -.08], ['b', 'rotateX(-90deg) translateZ(H)', .4]];
+    function make(sz) {
+      var c = GIFTC[(Math.random() * 3) | 0], w = document.createElement('div'), sh = document.createElement('div');
+      w.className = 'adv-gw'; sh.className = 'adv-gs';
+      w.style.width = w.style.height = sz + 'px';
+      var h = '<div class="adv-gb" style="--s:' + sz + 'px;--c1:' + c.c1 + ';--c2:' + c.c2 + ';--c3:' + c.c3 + ';--rb:' + c.rb + '">';
+      FACES.forEach(function (f) {
+        var shade = f[2] < 0 ? 'rgba(255,255,255,' + (-f[2]) + ')' : 'rgba(0,0,0,' + f[2] + ')';
+        h += '<i class="' + f[0] + '" style="--sh:' + shade + ';transform:' + f[1].replace('H', sz / 2 + 'px') + '">' +
+          (f[0] === 't' ? '<span class="bow" style="transform:translateZ(1px) rotateX(-90deg)"><b></b><b></b></span>' : '') + '</i>';
+      });
+      w.innerHTML = h + '</div>';
+      layer.appendChild(sh); layer.appendChild(w);
+      return { el: w, gb: w.firstChild, sh: sh };
+    }
+    function launch() {
+      var k = ban.clientHeight / 640, lr = layer.getBoundingClientRect(), tr = tree.getBoundingClientRect();
+      var sz = Math.round((34 + Math.random() * 46) * k);
+      var g = make(sz);
+      g.s = sz; g.k = k;
+      g.x = tr.left - lr.left + tr.width * (.42 + Math.random() * .16) - sz / 2;
+      g.y = tr.bottom - lr.top - tr.height * .08 - sz;
+      g.vx = (260 + Math.random() * 520) * k; g.vy = -(950 + Math.random() * 450) * k;
+      g.rx = 0; g.ry = Math.random() * 60 - 30; g.rz = 0;
+      g.wx = (Math.random() - .5) * 720; g.wy = (Math.random() - .5) * 540; g.wz = 200 + Math.random() * 380;
+      g.sq = 0; g.t = 0; g.state = 'fly'; g.op = 1;
+      live.push(g);
+      if (!raf) { last = performance.now(); raf = requestAnimationFrame(tickG); }
+    }
+    function near90(a) { return Math.round(a / 90) * 90; }
+    function tickG(t) {
+      var dt = Math.min(.04, (t - last) / 1000); last = t;
+      var W = layer.clientWidth, H = layer.clientHeight;
+      for (var i = live.length - 1; i >= 0; i--) {
+        var g = live[i], floor = H - g.s - 4 * g.k;
+        g.t += dt;
+        if (g.state === 'fly') {
+          g.vy += 2600 * g.k * dt; g.x += g.vx * dt; g.y += g.vy * dt;
+          g.rx += g.wx * dt; g.ry += g.wy * dt; g.rz += g.wz * dt;
+          if (g.x < 0) { g.x = 0; g.vx = Math.abs(g.vx) * .6; }
+          if (g.x > W - g.s) { g.x = W - g.s; g.vx = -Math.abs(g.vx) * .6; }
+          if (g.y >= floor) {
+            g.y = floor;
+            if (Math.abs(g.vy) > 260 * g.k) {
+              g.vy = -Math.abs(g.vy) * .58; g.vx *= .72; g.wx *= .6; g.wy *= .6; g.wz *= .55; g.sq = 1;
+            } else {
+              g.state = 'settle'; g.st = 0; g.from = [g.rx, g.rz]; g.to = [near90(g.rx), near90(g.rz)]; g.vx *= .5;
+            }
+          }
+        } else if (g.state === 'settle') {
+          g.st += dt; var u = Math.min(1, g.st / .35), e = 1 - Math.pow(1 - u, 3);
+          g.rx = g.from[0] + (g.to[0] - g.from[0]) * e; g.rz = g.from[1] + (g.to[1] - g.from[1]) * e;
+          g.x += g.vx * dt; g.vx *= Math.pow(.02, dt);
+          if (u >= 1) { g.state = 'rest'; g.rt = 0; }
+        } else if (g.state === 'rest') {
+          g.rt += dt;
+          if (g.rt > 4.5) g.op = Math.max(0, 1 - (g.rt - 4.5) / .8);
+          if (g.op <= 0) { g.el.remove(); g.sh.remove(); live.splice(i, 1); continue; }
+        }
+        g.sq = Math.max(0, g.sq - dt * 6);
+        var sx = 1 + .16 * g.sq, sy = 1 - .2 * g.sq;
+        g.el.style.transform = 'translate3d(' + g.x.toFixed(1) + 'px,' + g.y.toFixed(1) + 'px,0) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')';
+        g.el.style.opacity = g.op;
+        g.gb.style.transform = 'rotateY(' + g.ry.toFixed(1) + 'deg) rotateX(' + g.rx.toFixed(1) + 'deg) rotateZ(' + g.rz.toFixed(1) + 'deg)';
+        var hgt = Math.max(0, floor - g.y), sw = g.s * (1.1 - Math.min(.6, hgt / (400 * g.k)));
+        g.sh.style.width = sw.toFixed(1) + 'px'; g.sh.style.height = (sw * .22).toFixed(1) + 'px';
+        g.sh.style.transform = 'translate(' + (g.x + g.s / 2 - sw / 2).toFixed(1) + 'px,' + (H - sw * .16).toFixed(1) + 'px)';
+        g.sh.style.opacity = (g.op * (1 - Math.min(.8, hgt / (300 * g.k)))).toFixed(2);
+      }
+      raf = live.length ? requestAnimationFrame(tickG) : 0;
+    }
+    function batch() {
+      if (busy || live.length > 14) return; busy = true;
+      var n = 5 + ((Math.random() * 3) | 0);
+      for (var j = 0; j < n; j++) setTimeout(launch, j * 190);
+      setTimeout(function () { busy = false; }, n * 190 + 900);
+    }
+    tree.addEventListener('mouseenter', batch);
+    tree.addEventListener('click', batch);
   }
 
   /* ---------- коза ---------- */
