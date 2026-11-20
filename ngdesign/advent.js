@@ -1,18 +1,18 @@
 /* Адвент-календарь дизайнера — основной код лендинга.
    Подключение в Тильде (блок T123):
-   <div id="advent"></div><script src="https://a7778440006-web.github.io/negugly/advent/advent.js"></script>
+   <div id="advent"></div><script src="https://a7778440006-web.github.io/vitadidesign/ngdesign/advent.js"></script>
    Окошки (диалоги) добавляются отдельными маленькими блоками T123 — см. README.md */
 (function () {
   if (window.__adventLoaded) return; window.__adventLoaded = true;
 
   var SCRIPT = document.currentScript;
-  var BASE = (SCRIPT && SCRIPT.src ? SCRIPT.src.replace(/[^\/]*$/, '') : 'https://a7778440006-web.github.io/negugly/advent/');
-  var FONTS = BASE.replace(/advent\/$/, '') + 'fonts/';
+  var BASE = (SCRIPT && SCRIPT.src ? SCRIPT.src.replace(/[^\/]*$/, '') : 'https://a7778440006-web.github.io/vitadidesign/ngdesign/');
+  var FONTS = BASE + 'fonts/';
   var IMG = BASE + 'img/';
   var CFG = Object.assign({
     vk: 'https://vk.ru/vitadi.design',
     tg: 'https://t.me/vitadidesign',
-    privacy: '#',
+    privacy: 'https://vitadidesign.tilda.ws/shporadesign#/privacy',
     site: 'https://vk.ru/vitadi.design'
   }, window.ADVENT_CONFIG || {});
 
@@ -412,7 +412,7 @@
       '<img class="adv-ab s1" alt="" src="' + IMG + 'stars.webp"><img class="adv-ab s2" alt="" src="' + IMG + 'stars.webp">' +
       '<img class="adv-ab adv-elk2" alt="" src="' + IMG + 'elka.webp"><div class="adv-ab glow"></div></div>' +
       '<div class="adv-stage">' +
-      '<div class="adv-ab cat"><img alt="" src="' + BASE + '../cat.webp"></div>' +
+      '<div class="adv-ab cat"><img alt="" src="' + IMG + 'cat.webp"></div>' +
       '<h2 class="adv-h1"><span class="d">Счастливого нового года!</span><span class="m"><span class="a">счастливого</span>нового года!</span></h2>' +
       '<div class="adv-hand">Пусть все твои мечты сбываются каждый день</div>' +
       '<img class="adv-ab orn" alt="" src="' + IMG + 'ornaments.webp">' +

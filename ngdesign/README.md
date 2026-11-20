@@ -1,5 +1,7 @@
 # Адвент-календарь дизайнера
 
+Страница: https://vitadidesign.tilda.ws/ngdesign
+
 Лендинг собирается из двух частей:
 
 1. **Основной код** (`advent.js`). Вставляется в Тильду один раз и больше не меняется.
@@ -9,7 +11,7 @@
 
 ```html
 <div id="advent"></div>
-<script src="https://a7778440006-web.github.io/negugly/advent/advent.js"></script>
+<script src="https://a7778440006-web.github.io/vitadidesign/ngdesign/advent.js"></script>
 ```
 
 В настройках страницы фон — `#FBF6ED`, шапку и подвал Тильды отключите.
