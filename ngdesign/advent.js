@@ -619,16 +619,16 @@
     var l = em.last, now = performance.now();
     if (!l || now - l.t > 120) { em.last = { x: x, y: y, t: now }; return; }
     var dx = x - l.x, dy = y - l.y, dist = Math.sqrt(dx * dx + dy * dy);
-    var n = Math.min(this.o.max || 5, Math.floor(dist / (this.o.step || 7)));
+    var n = Math.min(em.max || this.o.max || 5, Math.floor(dist / (em.step || this.o.step || 7)));
     if (n < 1) return;
     for (var i = 0; i < n; i++) {
       var f = (i + Math.random()) / n, px = l.x + dx * f, py = l.y + dy * f;
-      var kind = Math.random(), star = kind < .5, big = Math.random() < .12;
+      var kind = Math.random(), star = kind < (em.starP || .5), big = Math.random() < (em.glow || .12);
       this.p.push({
         x: px + (Math.random() - .5) * 10, y: py + (Math.random() - .5) * 10,
         vx: (Math.random() - .5) * .5 + dx * .012, vy: (Math.random() - .3) * .5 + dy * .012,
         r: (star ? (big ? 7 + Math.random() * 6 : 2.5 + Math.random() * 4.5) : .8 + Math.random() * 1.6) * (em.scale || 1),
-        s: star, life: (this.o.life || 1600) * (.65 + Math.random() * .7), age: 0,
+        s: star, life: (this.o.life || 1600) * (.65 + Math.random() * .7) * (em.life || 1), age: 0,
         rot: Math.random() * .8 - .4, vr: (Math.random() - .5) * .02,
         c: this.o.colors[(Math.random() * this.o.colors.length) | 0], tw: Math.random() * 6.28, glow: big
       });
@@ -686,20 +686,22 @@
   /* вихрь звёздной пыли вокруг козы, когда она выезжает */
   var heroDust = null;
   Dust.prototype.swirl = function (mobile) {
+    /* спираль-воронка: снизу широкая, кверху сужается, пыль поднимается вокруг козы */
     var w = this.w, h = this.h; if (!w || !h) return;
-    var self = this, gs = h * (mobile ? 356 / 663 : 559 / 640), cx = w / 2, cy = h - gs * .55;
-    for (var k = 0; k < 6; k++) (function (k) {
-      var em = { last: null, scale: .9 }, dir = k % 2 ? 1 : -1, a0 = Math.random() * 6.28, dur = 1700 + Math.random() * 900;
-      var r0 = gs * (.18 + Math.random() * .1), r1 = gs * (.55 + Math.random() * .2), turns = 1.1 + Math.random() * .7, rise = gs * (.25 + Math.random() * .25);
+    var self = this, gs = h * (mobile ? 356 / 663 : 559 / 640), cx = w / 2;
+    var yb = h + gs * .02, yt = h - gs * 1.02, rb = gs * .62, rt = gs * .16;
+    for (var k = 0; k < 4; k++) (function (k) {
+      var em = { last: null, scale: 1.25, glow: .3, starP: .65, life: 1.15, step: 3, max: 10 }, a0 = k * 1.571 + Math.random() * .4, dur = 2300 + Math.random() * 400, turns = 2.6;
       setTimeout(function () {
         var t0 = performance.now();
         (function step(t) {
           var u = (t - t0) / dur; if (u > 1) return;
-          var e = 1 - Math.pow(1 - u, 2), a = a0 + dir * e * turns * 6.2832, r = r0 + (r1 - r0) * e;
-          self.emit(cx + Math.cos(a) * r * 1.15, cy + gs * .25 - rise * e + Math.sin(a) * r * .75, em);
+          var e = u * (2 - u) * .35 + u * .65;
+          var r = rb + (rt - rb) * e, a = a0 + e * turns * 6.2832;
+          self.emit(cx + Math.cos(a) * r, yb + (yt - yb) * e + Math.sin(a) * r * .22, em);
           requestAnimationFrame(step);
         })(t0);
-      }, k * 140);
+      }, k * 120);
     })(k);
   };
 
@@ -890,7 +892,13 @@
     var webkit = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document) ||
       (/AppleWebKit/.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Android|Firefox|FxiOS/.test(ua));
     var DUR = 5.042, SINK = .78, PAUSE = 15000, cycle = 0;
-    function burst() { if (heroDust) { heroDust.resize(); heroDust.swirl(root.getBoundingClientRect().width < 700); } }
+    function burst() {
+      if (!heroDust) return;
+      heroDust.resize();
+      var mob = root.getBoundingClientRect().width < 700;
+      heroDust.swirl(mob);
+      setTimeout(function () { if (box.classList.contains('up')) heroDust.swirl(mob); }, 1700);
+    }
     function later(fn, ms) { setTimeout(function () { if (document.hidden) { document.addEventListener('visibilitychange', function h() { if (!document.hidden) { document.removeEventListener('visibilitychange', h); later(fn, 1200); } }); } else fn(); }, ms); }
     if (!webkit) {
       var v = document.createElement('video');
